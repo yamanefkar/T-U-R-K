@@ -62,7 +62,7 @@ termux-toast -b red -c yellow "Merhaba"
 	cd $HOME/T-U-R-K/update/ &&
 	bash tst.sh --ngrok1
 	termux-notification -t "Tool kullanıma hazır."
-	bash $HOME/T-U-R-K/tst.sh
+	exit
 
 }
 banner(){ 
@@ -117,7 +117,7 @@ if [[ -e "update/ok.txt" ]]; then
 		cd pentest/ && bash tst.sh
 
 	elif [[ $islem_numarasi == 06 ||  $islem_numarasi == 6  ]]; then
-		cd update/ && bash tst.sh
+		cd termux-api/ && bash tst.sh
 
 	elif [[ $islem_numarasi == 99 ||  $islem_numarasi == 9  ]]; then
 		clear
