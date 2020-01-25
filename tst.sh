@@ -31,11 +31,11 @@ termux-toast -b red -c yellow "Merhaba"
 	pkg install python python2 -y
 	pkg install pip pip2 -y
 	pip install --upgrade pip
-	pip install bs4 -y
-	pip install future -y
-	pip install requests -y
-	pip install colorama -y
-	pip install wordlist -y
+	pip install bs4 
+	pip install future 
+	pip install requests 
+	pip install colorama
+	pip install wordlist
 	pkg install termux-api -y
 	pkg install curl  -y
 	pkg install wget -y
