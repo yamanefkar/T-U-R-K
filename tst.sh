@@ -92,8 +92,8 @@ banner(){
 	read -p $'\e[31m▂\e[32m▃\e[31m▃\e[37m İşlem Numarası : ' islem_numarasi
 
 }
-
-if [[ -e "/data/data/com.termux/files/usr/home/T-U-R-K/update/ok.txt" ]]; then
+cd $HOME/T-U-R-K/
+if [[ -e "update/ok.txt" ]]; then
 	banner
 	if [[ $islem_numarasi == 01 ||  $islem_numarasi == 1  ]]; then
 		cd exploit/ && bash tst.sh
