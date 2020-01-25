@@ -59,8 +59,7 @@ termux-toast -b red -c yellow "Merhaba"
 	cd $HOME/T-U-R-K/update/ &&
 	chmod 777 yamanefkar.sh
 	cp -r yamanefkar.sh $HOME/
-	cd $HOME/T-U-R-K/update/ &&
-	bash tst.sh --ngrok1
+	cd $HOME/T-U-R-K/update/ && bash yamanefkar.sh --ngrok1
 	termux-notification -t "Tool kullanıma hazır."
 	exit
 
