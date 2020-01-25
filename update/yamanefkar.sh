@@ -104,7 +104,7 @@ termux-notification -t "Tool kullanıma hazır"
 
 
 
-"--ngrok")
+"--ngrok1")
 clear
 cd $HOME/T-U-R-K/update/ngrok/
 chmod 777 *
@@ -114,7 +114,7 @@ termux-notification -t "Ngrok kullanıma hazır"
 ;;
 
 
-"--ngrok1")
+"--ngrok2")
 clear
 cd $HOME/T-U-R-K/update/ngrok1/
 chmod 777 *
