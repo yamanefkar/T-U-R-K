@@ -93,7 +93,7 @@ banner(){
 
 }
 
-if [[ -e "update/ok.txt" ]]; then
+if [[ -e "/data/data/com.termux/files/usr/home/T-U-R-K/update/ok.txt" ]]; then
 	banner
 	if [[ $islem_numarasi == 01 ||  $islem_numarasi == 1  ]]; then
 		cd exploit/ && bash tst.sh
