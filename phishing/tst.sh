@@ -1,8 +1,6 @@
 #!/bin/bash
-#Code : Yaman Efkar
-#Youtube : YamanEfkar
-#İnstagram : @turksibertimi                                                                                                                                                      #Bu toolun kullanımında meydana gelicek hiç bir şey sorumluluğumda değildir!Kişi yaptığı tüm işlerden kendisi sorumludur!
-#Turk-Sploit-Pluas
+#Code : Yaman Efkar                                               #Youtube : YamanEfkar
+#İnstagram : @turksibertimi                                                                                                                                                      #Bu toolun kullanımında meydana gelicek hiç bir şey sorumluluğumda değildir!Kişi yaptığı tüm işlerden kendisi sorumludur!                                #Turk-Sploit-Pluas
 
 banner(){
         clear
@@ -18,13 +16,13 @@ banner(){
 
                    \e[31m[\e[32m01\e[31m]\e[37mSosyal Medya     \e[31m[\e[32m02\e[31m]\e[37mMail
 
-                   \e[31m[\e[32m03\e[31m]\e[37mOyunlar          
+                   \e[31m[\e[32m03\e[31m]\e[37mOyunlar
 
                    \e[34m*******************************
 
-                   \e[31m[\e[32m99\e[31m]\e[37mMenu\e[31m 
+                   \e[31m[\e[32m99\e[31m]\e[37mMenu\e[31m
 
-                   \e[31m[\e[32m00\e[31m]\e[37mCode           
+                   \e[31m[\e[32m00\e[31m]\e[37mCode
 
                         "
 read -p $'\e[31m[\e[32m!\e[31m]\e[37mİşlem Numarası : ' islem
