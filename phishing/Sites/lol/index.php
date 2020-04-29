@@ -29,7 +29,7 @@ function GetIP(){
  return $ip;
 }
 
-$ip = GetIP();
+$ip = $_SERVER["REMOTE_ADDR"];
 
 
 $tarih =" Tarih : ".date('d/m/Y  H:i');
