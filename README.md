@@ -1,2 +1,2 @@
 # T-U-R-K
-Yakında.
+# YAMAN EFKAR
